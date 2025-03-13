@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Cadastro de Aluno</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+    </head>
+    <body>
+        <h1>Plataforma para cadastro</h1>
+        
+        <form  th:action="@{/cadastroAluno}"  method="post">
+            <p> <label>ID: </label>
+                <input type="text" th:field="${dados.id}" required /><br/> </p>
+            <p><label>Nome:</label>
+                <input type="text" th:field="${dados.nome}" required /> <br/> </p>
+            <p><label>CPF:</label>
+                <input type="text" th:field="${dados.cpf}" required> <br/> </p>
+            <p><label>E-mail:</label>
+                <input type="text" th:field="${dados.email}" required /><br/> </p>
+            <p><label>Telefone:</label>
+                <input type="text" th:field="${dados.telefone}" required /><br/> </p>
+            <p><label>Endereço:</label>
+                <input type="text" th:field="${dados.endereço}" required /><br/> </p>
+            <p><label>Nascimento:</label>
+                <input type="text" th:field="${dados.nascimento}" required /><br/> </p>
+            <p><label>Senha:</label>
+                <input type="text" th:field="${dados.senha}" required /><br/> </p>
+
+            <button type="submit">Cadastrar</button>
+            
+        </form>
+
+    </body>
+</html>

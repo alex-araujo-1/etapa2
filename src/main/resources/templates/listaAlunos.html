@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+    <head>
+        <title>Lista de Alunos</title>
+    </head>
+    <body>
+        <h1>Listagem de Alunos</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>Nascimento</th>
+                    <th>Senha</th>
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr th:each="dados : ${dado}">
+
+            <br>
+            <td th:text="${dados.id}"></td>
+            <td th:text="${dados.nome}"></td>
+            <td th:text="${dados.cpf}"></td>
+            <td th:text="${dados.email}"></td>
+            <td th:text="${dados.telefone}"></td>
+            <td th:text="${dados.endereço}"></td>
+            <td th:text="${dados.nascimento}"></td>
+            <td th:text="${dados.senha}"></td>
+            
+        </tr>
+    </tbody>  
+</table> 
+
+<a th:href="@{/consultaDadosAluno}"> Fechar</a>
+
+</body>
+</html>
