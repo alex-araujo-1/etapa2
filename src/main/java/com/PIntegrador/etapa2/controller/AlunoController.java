@@ -4,63 +4,75 @@
  */
 package com.PIntegrador.etapa2.controller;
 
-import com.PIntegrador.etapa2.model.Aluno;
-import java.util.ArrayList;
-import java.util.List;
+import com.PIntegrador.etapa2.repository.AlunoEntity;
+import com.PIntegrador.etapa2.service.AlunoService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
  * @author Pcs
  */
+
 @Controller
 public class AlunoController {
+    
+    @Autowired
+    AlunoService alunoService;
 
-    private List<Aluno> alunos = new ArrayList();
 
     @GetMapping("/cadastroAluno")
-    public String exibirAluno(Model model) {
-
-        model.addAttribute("dados", new Aluno());
+    public String criarAlunoForm(Model model) {
+        AlunoEntity escola = new AlunoEntity();
+        model.addAttribute("aluno", escola);
         return "cadastroAluno";
     }
-
-    @PostMapping("/cadastroAluno")
-    public String cadastrarAluno(@ModelAttribute Aluno cadastro, Model model) {
-
-        alunos.add(new Aluno(cadastro.getId(), cadastro.getNome(), cadastro.getCpf(), cadastro.getEmail(),
-                cadastro.getTelefone(), cadastro.getEndereço(), cadastro.getNascimento(), cadastro.getSenha()));
-        model.addAttribute("dados", cadastro);
-
-        return "consultaDadosAluno";
-    }
-
-    @GetMapping("/listaAlunos")
-    public String listarAlunos(Model model, Aluno cadastro) {
-
-        model.addAttribute("dado", alunos);
+    
+    
+    @GetMapping("/tabela")
+    public String viewHomePage(Model model) {
+        model.addAttribute("listagemAlunos", alunoService.listarAlunos());
         return "listaAlunos";
     }
-
-    @GetMapping("/consultaDadosAluno")
-    public String exibirConsultaAluno(Model model) {
-
-        model.addAttribute("dados", new Aluno());
-        return "consultaDadosAluno";
-    }
-
-
-        /*@GetMapping("/usuario")
-        public String getUserById(@RequestParam Long id, Model model) {
-            Aluno user = alunos.stream().filter(u -> u.getId().equals(id)).findFirst().orElse(null);
-            model.addAttribute("usuario", user);
-            return "usuario";
-        }*/
     
 
+    @PostMapping("/salvarAluno")
+    public String salvarAluno(@Valid @ModelAttribute("aluno") AlunoEntity escola, BindingResult result) {
+        if (result.hasErrors()) {
+            return "cadastroAluno";
+        }
+
+        if (escola.getId() == null) {
+            alunoService.criarAluno(escola);
+        } else {
+
+            alunoService.atualizarAluno(escola.getId(), escola);
+        }
+        return "redirect:/tabela";
+    }
+    
+
+    @GetMapping("/atualizarAlunoForm/{id}")
+    public String atualizarAlunoForm(@PathVariable(value = "id") Integer id, Model model) {
+        AlunoEntity escola = alunoService.getAlunoId(id);
+        model.addAttribute("aluno", escola);
+        return "atualizar";
+    }
+    
+    
+    @GetMapping("/deletarAluno/{id}")
+    public String deletarAluno(@PathVariable(value = "id") Integer id) {
+        alunoService.deletarAluno(id);
+        return "redirect:/tabela";
+    }
+    
+    
+    
 }

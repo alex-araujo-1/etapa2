@@ -1,45 +1,51 @@
 <!DOCTYPE html>
-<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> 
     <head>
-        <title>Lista de Alunos</title>
+        <meta charset="utf-8"> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> 
     </head>
     <body>
+        
+        <div class="container my-2">
         <h1>Listagem de Alunos</h1>
         
-        <table>
+        <table border="1" class="table table-striped table-responsive-md">
             <thead>
                 <tr>
                     
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>CPF</th>
-                    <th>E-mail</th>
-                    <th>Telefone</th>
-                    <th>Endereço</th>
-                    <th>Nascimento</th>
-                    <th>Senha</th>
+                    <th>ID
+                    <th>Nome
+                    <th>CPF
+                    <th>E-mail
+                    <th>Telefone
+                    <th>Endereço
+                    <th>Nascimento
                     
                 </tr>
             </thead>
             
             <tbody>
-                <tr th:each="dados : ${dado}">
-
-            <br>
-            <td th:text="${dados.id}"></td>
-            <td th:text="${dados.nome}"></td>
-            <td th:text="${dados.cpf}"></td>
-            <td th:text="${dados.email}"></td>
-            <td th:text="${dados.telefone}"></td>
-            <td th:text="${dados.endereço}"></td>
-            <td th:text="${dados.nascimento}"></td>
-            <td th:text="${dados.senha}"></td>
-            
-        </tr>
+                <tr th:each="escola : ${listagemAlunos}"> 
+                        <td th:text="${escola.id}"> 
+                        <td th:text="${escola.nome}"> 
+                        <td th:text="${escola.cpf}">  
+                        <td th:text="${escola.email}"> 
+                        <td th:text="${escola.telefone}">
+                  <td th:text="${escola.endereco}">
+                  <td th:text="${escola.nascimento}">
+ 
+                   <td> <a th:href="@{/atualizarAlunoForm/{id}(id=${escola.id})}" class="btn btn-primary">Atualizar</a> 
+                            <a th:href="@{/deletarAluno/{id}(id=${escola.id})}" class="btn btn-danger">Excluir</a> 
+                        </td>    
+                      
+                    </tr> 
     </tbody>  
 </table> 
+        
+        <hr> 
 
-<a th:href="@{/consultaDadosAluno}"> Fechar</a>
+<a th:href="@{/cadastroAluno}"> Voltar</a>
+</div>
 
 </body>
 </html>
