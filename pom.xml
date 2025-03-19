@@ -13,6 +13,9 @@
 	<groupId>com.PIntegrador</groupId>
 	<artifactId>etapa2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+        
+        <packaging>war</packaging>
+        
 	<name>etapa2</name>
 	<description>Demo project for Spring Boot</description>
 	<properties> 
